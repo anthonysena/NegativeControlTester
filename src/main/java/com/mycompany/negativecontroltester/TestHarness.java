@@ -8,7 +8,7 @@ package com.mycompany.negativecontroltester;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import org.ohdsi.circe.cohortdefinition.negativecontrols.CohortExpressionQueryBuilder;
-import org.ohdsi.circe.cohortdefinition.negativecontrols.CohortExpression;
+import org.ohdsi.circe.cohortdefinition.negativecontrols.OutcomeCohortExpression;
 import org.ohdsi.circe.cohortdefinition.negativecontrols.OccurrenceType;
 
 /**
@@ -18,7 +18,7 @@ import org.ohdsi.circe.cohortdefinition.negativecontrols.OccurrenceType;
 public class TestHarness {
 
     public static void main(String[] args) {
-        CohortExpression test1 = new CohortExpression();
+        OutcomeCohortExpression test1 = new OutcomeCohortExpression();
         test1.occurrenceType = OccurrenceType.FIRST;
         test1.detectOnDescendants = true;
         test1.domainIds.add("CONDITION");
@@ -29,13 +29,13 @@ public class TestHarness {
         test1.domainIds.add("PROCEDURE");
         test1.domainIds.add("VISIT");
         
-        CohortExpression test2 = new CohortExpression();
+        OutcomeCohortExpression test2 = new OutcomeCohortExpression();
         test2.occurrenceType = OccurrenceType.ALL;
         test2.detectOnDescendants = true;
         test2.domainIds.add("CONDITION");
         test2.domainIds.add("MEASUREMENT");
 
-        CohortExpression test3 = new CohortExpression();
+        OutcomeCohortExpression test3 = new OutcomeCohortExpression();
         test3.occurrenceType = OccurrenceType.FIRST;
         test3.detectOnDescendants = false;
         test3.domainIds.add("PROCEDURE");
