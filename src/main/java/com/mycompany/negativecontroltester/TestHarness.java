@@ -72,6 +72,34 @@ public class TestHarness {
             } catch (FileNotFoundException ex) {
                 System.out.println("ERROR: " + ex.getMessage());
             }
+            
+            json = "{\"detectOnDescendants\":\"true\",\"domains\":[\"condition\",\"DRUG\",\"DEVICE\",\"MEASUREMENT\",\"OBSERVATION\",\"PROCEDURE\",\"VISIT\" ],\"occurrenceType\":\"first\"}";
+            cohortExpression = OutcomeCohortExpression.fromJson(json);
+            query = queryBuilder.buildExpressionQuery(cohortExpression);
+            try (PrintWriter out = new PrintWriter("test-1-all-domains-detect-true-occurrence-first-from-json.sql")) {
+                out.println(query);
+            } catch (FileNotFoundException ex) {
+                System.out.println("ERROR: " + ex.getMessage());
+            }
+            
+            json = "{\"detectOnDescendants\":\"true\",\"domains\":[\"condition\",\"MEASUREMENT\"],\"occurrenceType\":\"ALL\"}";
+            cohortExpression = OutcomeCohortExpression.fromJson(json);
+            query = queryBuilder.buildExpressionQuery(cohortExpression);
+            try (PrintWriter out = new PrintWriter("test-2-2-domains-detect-true-occurrence-all-from-json.sql")) {
+                out.println(query);
+            } catch (FileNotFoundException ex) {
+                System.out.println("ERROR: " + ex.getMessage());
+            }
+            
+            json = "{\"detectOnDescendants\":\"false\",\"domains\":[\"PROCEDURE\"],\"occurrenceType\":\"first\"}";
+            cohortExpression = OutcomeCohortExpression.fromJson(json);
+            query = queryBuilder.buildExpressionQuery(cohortExpression);
+            try (PrintWriter out = new PrintWriter("test-3-1-domain-detect-false-occurrence-first-from-json.sql")) {
+                out.println(query);
+            } catch (FileNotFoundException ex) {
+                System.out.println("ERROR: " + ex.getMessage());
+            }
+            
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
