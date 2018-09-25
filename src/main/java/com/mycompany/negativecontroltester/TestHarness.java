@@ -21,24 +21,24 @@ public class TestHarness {
         OutcomeCohortExpression test1 = new OutcomeCohortExpression();
         test1.occurrenceType = OccurrenceType.FIRST;
         test1.detectOnDescendants = true;
-        test1.domainIds.add("CONDITION");
-        test1.domainIds.add("DRUG");
-        test1.domainIds.add("DEVICE");
-        test1.domainIds.add("MEASUREMENT");
-        test1.domainIds.add("OBSERVATION");
-        test1.domainIds.add("PROCEDURE");
-        test1.domainIds.add("VISIT");
+        test1.domains.add("CONDITION");
+        test1.domains.add("DRUG");
+        test1.domains.add("DEVICE");
+        test1.domains.add("MEASUREMENT");
+        test1.domains.add("OBSERVATION");
+        test1.domains.add("PROCEDURE");
+        test1.domains.add("VISIT");
         
         OutcomeCohortExpression test2 = new OutcomeCohortExpression();
         test2.occurrenceType = OccurrenceType.ALL;
         test2.detectOnDescendants = true;
-        test2.domainIds.add("CONDITION");
-        test2.domainIds.add("MEASUREMENT");
+        test2.domains.add("CONDITION");
+        test2.domains.add("MEASUREMENT");
 
         OutcomeCohortExpression test3 = new OutcomeCohortExpression();
         test3.occurrenceType = OccurrenceType.FIRST;
         test3.detectOnDescendants = false;
-        test3.domainIds.add("PROCEDURE");
+        test3.domains.add("PROCEDURE");
         
         CohortExpressionQueryBuilder queryBuilder = new CohortExpressionQueryBuilder();
         String query = "";
@@ -59,6 +59,15 @@ public class TestHarness {
             
             query = queryBuilder.buildExpressionQuery(test3);
             try (PrintWriter out = new PrintWriter("test-3-1-domain-detect-false-occurrence-first.sql")) {
+                out.println(query);
+            } catch (FileNotFoundException ex) {
+                System.out.println("ERROR: " + ex.getMessage());
+            }
+            
+            String json = "{\"detectOnDescendants\":\"true\",\"domains\":[\"condition\"],\"occurrenceType\":\"all\"}";
+            OutcomeCohortExpression cohortExpression = OutcomeCohortExpression.fromJson(json);
+            query = queryBuilder.buildExpressionQuery(cohortExpression);
+            try (PrintWriter out = new PrintWriter("test-4-from-json.sql")) {
                 out.println(query);
             } catch (FileNotFoundException ex) {
                 System.out.println("ERROR: " + ex.getMessage());

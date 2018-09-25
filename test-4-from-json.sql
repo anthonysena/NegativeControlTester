@@ -27,11 +27,5 @@ FROM (
         d.condition_start_date cohort_start_date
 FROM @cdm_database_schema.condition_occurrence d
 INNER JOIN #Codesets c ON c.concept_id = d.condition_concept_id
-UNION ALL
-SELECT d.person_id subject_id,
-        c.ancestor_concept_id cohort_definition_id,
-        d.measurement_date cohort_start_date
-FROM @cdm_database_schema.measurement d
-INNER JOIN #Codesets c ON c.concept_id = d.measurement_concept_id
 ) s
 ;
